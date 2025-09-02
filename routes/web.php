@@ -1,18 +1,36 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\RumahSakitController;
+use App\Http\Controllers\PasienController;
+use App\Http\Controllers\ProfilController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [LoginController::class, 'showLogin'])->name('login');
+Route::post('/login', [LoginController::class, 'login'])->name('login.post');
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/profile', [ProfilController::class, 'index'])->name('profile');
+Route::resource('rumah_sakit', RumahSakitController::class)->names([
+        'index'   => 'rumahsakit.index',
+        'create'  => 'rumahsakit.create',
+        'store'   => 'rumahsakit.store',
+        'show'    => 'rumahsakit.show',
+        'edit'    => 'rumahsakit.edit',
+        'update'  => 'rumahsakit.update',
+        'destroy' => 'rumahsakit.destroy',
+    ]);
+Route::resource('pasien', PasienController::class)->names([
+        'index'   => 'pasien.index',
+        'create'  => 'pasien.create',
+        'store'   => 'pasien.store',
+        'show'    => 'pasien.show',
+        'edit'    => 'pasien.edit',
+        'update'  => 'pasien.update',
+        'destroy' => 'pasien.destroy',
+    ]);
+
+
