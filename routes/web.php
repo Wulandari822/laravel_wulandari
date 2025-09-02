@@ -8,13 +8,14 @@ use App\Http\Controllers\PasienController;
 use App\Http\Controllers\ProfilController;
 
 
-Route::get('/', [LoginController::class, 'showLogin'])->name('login');
-Route::post('/login', [LoginController::class, 'login'])->name('login.post');
+Route::get('/', [LoginController::class, 'showLogin'])->name('login.show');
+Route::post('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-Route::get('/profile', [ProfilController::class, 'index'])->name('profile');
-Route::resource('rumah_sakit', RumahSakitController::class)->names([
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/profile', [ProfilController::class, 'index'])->name('profile');
+    Route::resource('rumah_sakit', RumahSakitController::class)->names([
         'index'   => 'rumahsakit.index',
         'create'  => 'rumahsakit.create',
         'store'   => 'rumahsakit.store',
@@ -23,7 +24,7 @@ Route::resource('rumah_sakit', RumahSakitController::class)->names([
         'update'  => 'rumahsakit.update',
         'destroy' => 'rumahsakit.destroy',
     ]);
-Route::resource('pasien', PasienController::class)->names([
+    Route::resource('pasien', PasienController::class)->names([
         'index'   => 'pasien.index',
         'create'  => 'pasien.create',
         'store'   => 'pasien.store',
@@ -32,5 +33,6 @@ Route::resource('pasien', PasienController::class)->names([
         'update'  => 'pasien.update',
         'destroy' => 'pasien.destroy',
     ]);
+});
 
 

@@ -42,6 +42,12 @@
 </head>
 <body>
 
+@if (session('error'))
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      {{ session('error') }}
+  </div>
+@endif
+
 <div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
   <div class="d-flex gap-4 flex-wrap align-items-center justify-content-center w-100">
     
@@ -62,7 +68,7 @@
     <h5 class="text-center mb-4">Silakan masuk dengan akun Anda</h5>
   
     <form action="{{ route('login') }}" method="POST">
-        @csrf
+    @csrf
         <div class="mb-3">
             <label for="username" class="form-label">Username</label>
             <input type="text" name="username" class="form-control form-control-lg" id="username" placeholder="Masukkan username" required>
